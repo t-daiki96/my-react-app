@@ -3,12 +3,12 @@ import reactLogo from '@/assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
 import { Index } from '@components/index';
-import useStore, { bearsSore } from '@store/bears';
+import useStore, { BearStoreType } from '@store/bears';
 
 function App() {
 	const [count, setCount] = useState(0);
 	const { bears, increasePopulation, removeAllBears } = useStore(
-		(state: bearsSore) => state
+		(state: BearStoreType) => state
 	);
 
 	return (
