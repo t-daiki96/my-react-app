@@ -1,18 +1,27 @@
-import './App.css';
-import useStore, { BearStoreType } from '@store/bears';
+import React, { StrictMode } from 'react';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
-function App() {
-	const { bears, increasePopulation, removeAllBears } = useStore(
-		(state: BearStoreType) => state
-	);
+// Import the generated route tree
+import { routeTree } from './routeTree.gen';
 
-	return (
-		<>
-			<div>bears count {bears}</div>
-			<button onClick={increasePopulation}>one up</button>
-			<button onClick={removeAllBears}>remove all</button>
-		</>
-	);
+// Create a new router instance
+const router = createRouter({ routeTree });
+
+// Register the router instance for type safety
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
 }
 
-export default App;
+// Render the app
+const rootElement = document.getElementById('root')!;
+if (!rootElement.innerHTML) {
+	const root = ReactDOM.createRoot(rootElement);
+	root.render(
+		<StrictMode>
+			<RouterProvider router={router} />
+		</StrictMode>
+	);
+}
